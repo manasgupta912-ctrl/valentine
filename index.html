@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aditi Singh ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- WhatsApp Preview -->
+<meta property="og:title" content="Aditi Singh ❤️">
+<meta property="og:description" content="A small question… with a big heart 💖">
+<meta property="og:image" content="aditi.jpg">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #1a0b2e, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  overflow: hidden;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.card {
+  background: rgba(0,0,0,0.75);
+  border-radius: 25px;
+  padding: 30px 22px;
+  text-align: center;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 0 45px rgba(255,0,100,0.5);
+  animation: fadeIn 2s ease;
+  z-index: 2;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(30px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ff4d6d;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 17px;
+  margin-bottom: 22px;
+  line-height: 1.4;
+}
+
+button {
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  margin: 6px;
+}
+
+#yes {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+}
+
+#no {
+  background: #444;
+  color: white;
+  position: absolute;
+}
+
+#message {
+  display: none;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ffb3c6;
+}
+
+#share {
+  display: none;
+  margin-top: 15px;
+  background: #25D366;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_42c7e29c21.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+  <img src="aditi.jpg" alt="Aditi Singh">
+  <h1>Aditi Singh 💖</h1>
+
+  <p>
+    Some people are magic…<br>
+    You smile, and everything feels right ✨<br><br>
+    So here I am,<br>
+    asking you something from my heart 🌹<br><br>
+    Will you be my Valentine?
+  </p>
+
+  <button id="yes" onclick="yesClicked()">Yes 😍</button>
+  <button id="no" onmouseover="moveNo()">No 🙈</button>
+
+  <div id="message">
+    You just turned an ordinary day into a memory 💓<br>
+    This Valentine’s… it’s you and me 💫<br>
+    I promise smiles, care, and moments worth keeping 🌙
+  </div>
+
+  <button id="share" onclick="share()">Share on WhatsApp 💌</button>
+</div>
+
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+function createConfetti() {
+  for (let i = 0; i < 150; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 40 + 10,
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`
+    });
+  }
+}
+
+function drawConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  confetti.forEach(c => {
+    ctx.beginPath();
+    ctx.fillStyle = c.color;
+    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  updateConfetti();
+}
+
+function updateConfetti() {
+  confetti.forEach(c => {
+    c.y += Math.cos(c.d) + 4;
+    if (c.y > canvas.height) {
+      c.y = -10;
+    }
+  });
+}
+
+function startConfetti() {
+  createConfetti();
+  setInterval(drawConfetti, 20);
+}
+
+function yesClicked() {
+  document.getElementById("message").style.display = "block";
+  document.getElementById("share").style.display = "inline-block";
+  startConfetti();
+}
+
+function moveNo() {
+  const btn = document.getElementById("no");
+  btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+}
+
+function share() {
+  const text = "Aditi Singh ❤️ I made something special for you 💖\nJust one question from my heart 🌹";
+  const url = window.location.href;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text + " " + url)}`, "_blank");
+}
+</script>
+
+</body>
+</html>
